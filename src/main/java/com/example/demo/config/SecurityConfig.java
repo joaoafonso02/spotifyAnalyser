@@ -18,7 +18,7 @@ public class SecurityConfig {
             .cors().and() // Enable CORS
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/login", "/login/**", "/oauth2/**", "/auth/spotify", "/logout").permitAll()
-                .requestMatchers("/playlists", "/playlist-tracks/**").authenticated()
+                .requestMatchers("/playlists", "/playlist-tracks/**", "/play-playlist/**", "/devices", "/analytics/**").authenticated()
                 .anyRequest().authenticated()
             )
             .oauth2Login(oauth2 -> oauth2

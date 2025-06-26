@@ -11,7 +11,7 @@ spring:
             client-secret: 07ca7ca444ab40858fc3497ac0881cc1
             authorization-grant-type: authorization_code
             redirect-uri: http://127.0.0.1:8080/login/oauth2/code/spotify
-            scope: user-read-private,playlist-read-private,playlist-read-collaborative,user-modify-playback-state,user-read-playback-state
+            scope: user-read-private,playlist-read-private,playlist-read-collaborative,user-modify-playback-state,user-read-playback-state, user-top-read
         provider:
           spotify:
             authorization-uri: https://accounts.spotify.com/authorize

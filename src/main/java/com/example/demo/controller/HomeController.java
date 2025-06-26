@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.Map;
 import java.util.List;
 import java.util.Set;
+import java.util.Arrays;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpEntity;
@@ -29,6 +30,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Cookie;
 import java.io.IOException;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class HomeController {
@@ -148,6 +150,92 @@ public class HomeController {
         return ResponseEntity.ok(items);
     }
 
+
+   // Function will return the top artists 
+    @GetMapping("/analytics/top-artists")
+    public List<Map<String, Object>> getTopArtists(
+        @RegisteredOAuth2AuthorizedClient("spotify") OAuth2AuthorizedClient authorizedClient,
+        @RequestParam(value = "time_range", defaultValue = "medium_term") String timeRange,
+        @RequestParam(value = "limit", defaultValue = "50") int limit,
+        HttpServletRequest request
+    ) {
+        // Debug the entire request
+        System.out.println("🔄 BACKEND RECEIVED REQUEST:");
+        System.out.println("   Full URL: " + request.getRequestURL() + "?" + request.getQueryString());
+        System.out.println("   Time Range Parameter: " + timeRange);
+        System.out.println("   Limit Parameter: " + limit);
+        
+        // Debug all parameters
+        request.getParameterMap().forEach((key, values) -> {
+            System.out.println("   Param " + key + ": " + Arrays.toString(values));
+        });
+        
+        String url = "https://api.spotify.com/v1/me/top/artists?time_range=" + timeRange + "&limit=" + limit;
+        System.out.println("🌐 SPOTIFY API URL: " + url);
+        
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + authorizedClient.getAccessToken().getTokenValue());
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        try {
+            ResponseEntity<Map> response = restTemplate.exchange(url, HttpMethod.GET, entity, Map.class);
+            Map<String, Object> responseBody = response.getBody();
+            
+            if (responseBody != null && responseBody.get("items") instanceof List) {
+                List<Map<String, Object>> items = (List<Map<String, Object>>) responseBody.get("items");
+                System.out.println("✅ SPOTIFY RETURNED " + items.size() + " artists for time range: " + timeRange);
+                return items;
+            }
+            return List.of();
+        } catch (Exception e) {
+            System.err.println("❌ Error fetching top artists: " + e.getMessage());
+            return List.of();
+        }
+    }
+
+    // Function will return the top tracks
+   @GetMapping("/analytics/top-tracks")
+    public List<Map<String, Object>> getTopTracks(
+        @RegisteredOAuth2AuthorizedClient("spotify") OAuth2AuthorizedClient authorizedClient,
+        @RequestParam(value = "time_range", defaultValue = "medium_term") String timeRange,
+        @RequestParam(value = "limit", defaultValue = "50") int limit,
+        HttpServletRequest request
+    ) {
+        // Debug the entire request
+        System.out.println("🔄 TRACKS BACKEND RECEIVED REQUEST:");
+        System.out.println("   Full URL: " + request.getRequestURL() + "?" + request.getQueryString());
+        System.out.println("   Time Range Parameter: " + timeRange);
+        System.out.println("   Limit Parameter: " + limit);
+        
+        // Debug all parameters
+        request.getParameterMap().forEach((key, values) -> {
+            System.out.println("   Param " + key + ": " + Arrays.toString(values));
+        });
+        
+        String url = "https://api.spotify.com/v1/me/top/tracks?time_range=" + timeRange + "&limit=" + limit;
+        System.out.println("🌐 SPOTIFY API URL: " + url);
+        
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + authorizedClient.getAccessToken().getTokenValue());
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        try {
+            ResponseEntity<Map> response = restTemplate.exchange(url, HttpMethod.GET, entity, Map.class);
+            Map<String, Object> responseBody = response.getBody();
+            
+            if (responseBody != null && responseBody.get("items") instanceof List) {
+                List<Map<String, Object>> items = (List<Map<String, Object>>) responseBody.get("items");
+                System.out.println("✅ SPOTIFY RETURNED " + items.size() + " tracks for time range: " + timeRange);
+                return items;
+            }
+            return List.of(); // Return empty list if no items
+        } catch (Exception e) {
+            System.err.println("❌ Error fetching top tracks: " + e.getMessage());
+            return List.of(); // Return empty list on error
+        }
+    }
 
     @GetMapping("/logout")
     public ResponseEntity<Map<String, String>> logout(HttpServletRequest request, HttpServletResponse response) {

@@ -14,7 +14,7 @@ const Dashboard = () => {
           method: 'GET',
           credentials: 'include',
         });
-
+  
         if (response.ok) {
           const userData = await response.json();
           setIsAuthenticated(true);
@@ -22,17 +22,20 @@ const Dashboard = () => {
           console.log('User is authenticated:', userData);
         } else if (response.status === 401) {
           console.log('User is not authenticated');
-          window.location.href = 'http://127.0.0.1:8080/oauth2/authorization/spotify'; 
+          // Don't redirect automatically - just set authenticated to false
+          setIsAuthenticated(false);
         } else {
           console.error('Unexpected response status:', response.status);
+          setIsAuthenticated(false);
         }
       } catch (error) {
         console.error('Error checking authentication:', error);
+        setIsAuthenticated(false);
       } finally {
         setLoading(false);
       }
     };
-
+  
     checkAuthentication();
   }, []);
 
@@ -57,13 +60,31 @@ const Dashboard = () => {
             <span className="brand-text">Spotify Analyzer</span>
           </div>
           <div className="nav-user">
-            <div className="user-info">
-              <span className="user-name">{user?.name || 'Music Lover'}</span>
-              <span className="user-id">#{user?.id|| 'user'}</span>
-            </div>
-            <Link to="/logout" className="logout-btn">
-              <span>Log Out</span>
-            </Link>
+            {isAuthenticated ? (
+              // Show user info when authenticated
+              <>
+                <div className="user-info">
+                  <span className="user-name">{user?.name || 'Music Lover'}</span>
+                  <span className="user-id">#{user?.id || 'user'}</span>
+                </div>
+                <div className="user-avatar-nav">
+                  <span>🎤</span>
+                </div>
+                <Link to="/logout" className="logout-btn">
+                  <span>👋</span>
+                  <span>Logout</span>
+                </Link>
+              </>
+            ) : (
+              // Show login button when not authenticated
+              <button 
+                className="login-btn"
+                onClick={() => window.location.href = 'http://127.0.0.1:8080/oauth2/authorization/spotify'}
+              >
+                <span>🎵</span>
+                <span>Login with Spotify</span>
+              </button>
+            )}
           </div>
         </div>
       </nav>
@@ -97,10 +118,10 @@ const Dashboard = () => {
           </Link>
         </div>
         <div className="quick-action-item">
-          <button className="quick-btn secondary" disabled>
+          <Link to="/analytics" className="quick-btn primary">
             <span className="quick-icon">📊</span>
             <span className="quick-text">Analytics</span>
-          </button>
+            </Link>
         </div>
         <div className="quick-action-item">
           <button className="quick-btn secondary" disabled>
@@ -128,19 +149,19 @@ const Dashboard = () => {
             </div>
           </Link>
 
-          <div className="feature-card upcoming">
-            <div className="feature-header">
-              <div className="feature-icon">📈</div>
-              <div className="feature-badge coming-soon">Coming Soon</div>
-            </div>
-            <h3 className="feature-title">Music Analytics</h3>
-            <p className="feature-description">
-              Deep insights into your listening habits and preferences
-            </p>
-            <div className="feature-footer">
-              <span className="feature-action">Coming Soon</span>
-            </div>
+          <Link to="/analytics" className="feature-card active">
+          <div className="feature-header">
+            <div className="feature-icon">📈</div>
+            <div className="feature-badge available">Available</div>
           </div>
+          <h3 className="feature-title">Music Analytics</h3>
+          <p className="feature-description">
+            Deep insights into your listening habits and preferences
+          </p>
+          <div className="feature-footer">
+            <span className="feature-action">Explore Now →</span>
+          </div>
+        </Link>
 
           <div className="feature-card upcoming">
             <div className="feature-header">

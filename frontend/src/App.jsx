@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard';
 import Playlists from './components/Playlists';
 import PlaylistTracks from './components/PlaylistTracks'; 
 import Logout from './components/Logout';
+import Analytics from './components/Analytics';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/playlists" element={<Playlists />} />
         <Route path="/playlist-tracks/:playlistId" element={<PlaylistTracks />} />
+        <Route path="/analytics" element={<Analytics />} />
         <Route path="/logout" element={<Logout />} />
       </Routes>
     </Router>
