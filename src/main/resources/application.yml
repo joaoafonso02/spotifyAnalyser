@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          spotify:
+            client-id: 9268b9d9eb4044baa5608bffbdb6a81f
+            client-secret: 07ca7ca444ab40858fc3497ac0881cc1
+            authorization-grant-type: authorization_code
+            redirect-uri: http://127.0.0.1:8080/login/oauth2/code/spotify
+            scope: user-read-private,playlist-read-private,playlist-read-collaborative,user-modify-playback-state,user-read-playback-state
+        provider:
+          spotify:
+            authorization-uri: https://accounts.spotify.com/authorize
+            token-uri: https://accounts.spotify.com/api/token
+            user-info-uri: https://api.spotify.com/v1/me
+            user-name-attribute: id
