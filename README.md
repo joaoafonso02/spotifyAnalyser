@@ -6,7 +6,7 @@ A comprehensive application for analyzing your Spotify playlists, discovering mu
 ### Clone the repository
 Clone the repository:
 ```bash
-git clone https://github.com/yourusername/spotify-analyzer.git
+git clone git@github.com:joaoafonso02/spotifyAnalyser.git
 cd spotify-analyzer
 ```
 
