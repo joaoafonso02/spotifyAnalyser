@@ -121,7 +121,13 @@ const Dashboard = () => {
           <Link to="/analytics" className="quick-btn primary">
             <span className="quick-icon">📊</span>
             <span className="quick-text">Analytics</span>
-            </Link>
+          </Link>
+        </div>
+        <div className="quick-action-item">
+          <Link to="/chatbot" className="quick-btn primary">
+            <span className="quick-icon">🤖</span>
+            <span className="quick-text">Chat Assistant</span>
+          </Link>
         </div>
         <div className="quick-action-item">
           <button className="quick-btn secondary" disabled>
@@ -162,6 +168,20 @@ const Dashboard = () => {
             <span className="feature-action">Explore Now →</span>
           </div>
         </Link>
+
+        <Link to="/chatbot" className="feature-card active">
+        <div className="feature-header">
+          <div className="feature-icon">🤖</div>
+          <div className="feature-badge available">Available</div>
+        </div>
+        <h3 className="feature-title">Music Assistant</h3>
+        <p className="feature-description">
+          Chat with AI for music recommendations and discovery
+        </p>
+        <div className="feature-footer">
+          <span className="feature-action">Chat Now →</span>
+        </div>
+      </Link>
 
           <div className="feature-card upcoming">
             <div className="feature-header">

@@ -17,13 +17,18 @@ public class SecurityConfig {
         http
             .cors().and() // Enable CORS
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/login", "/login/**", "/oauth2/**", "/auth/spotify", "/logout").permitAll()
+                .requestMatchers("/", "/login", "/login/**", "/oauth2/**", "/auth/spotify", "/logout", "/api/chatbot/**").permitAll()
                 .requestMatchers("/playlists", "/playlist-tracks/**", "/play-playlist/**", "/devices", "/analytics/**").authenticated()
+                .requestMatchers("/api/chatbot/**").permitAll() 
                 .anyRequest().authenticated()
             )
             .oauth2Login(oauth2 -> oauth2
-                .defaultSuccessUrl("http://127.0.0.1:3000/dashboard", true) // Update to 127.0.0.1
+                .defaultSuccessUrl("http://127.0.0.1:3000/dashboard", true)
             )
+            .csrf(csrf -> csrf
+                .ignoringRequestMatchers("/api/chatbot/**") 
+            )
+            
             .exceptionHandling(exceptions -> exceptions
                 .authenticationEntryPoint((request, response, authException) -> {
                     response.setStatus(HttpStatus.UNAUTHORIZED.value());

@@ -13,7 +13,7 @@ cd spotify-analyzer
 ### Backend Setup
 Run the Spring Boot application
 ```bash
-mvn spring-boot:run
+./mvnw spring-boot:run    
 ```
 The backend will start on http://127.0.0.1:8080
 

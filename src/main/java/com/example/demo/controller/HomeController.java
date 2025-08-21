@@ -1,36 +1,32 @@
 package com.example.demo.controller;
 
-import java.util.Map;
-import java.util.List;
-import java.util.Set;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.MediaType;
-import org.springframework.web.client.HttpClientErrorException;
+
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.Cookie;
-import java.io.IOException;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class HomeController {
@@ -259,4 +255,5 @@ public class HomeController {
         
         return ResponseEntity.ok(Map.of("message", "You have been logged out successfully"));
     }
+
 }
