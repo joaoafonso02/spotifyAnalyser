@@ -3,6 +3,8 @@ A comprehensive application for analyzing your Spotify playlists, discovering mu
 
 ## Getting Started
 
+![Spotify Playlist Analyzer](./img/main.png)    
+
 ### Clone the repository
 Clone the repository:
 ```bash

@@ -6,7 +6,7 @@ const FloatingChatBot = () => {
   const [messages, setMessages] = useState([
     {
       id: 1,
-      text: "👋 Hey! I'm your music assistant. Ask me about your Spotify data or get music recommendations!",
+      text: "👋 Hey! I'm your music assistant. Ask me anything or about your Spotify data or get music recommendations!",
       sender: 'bot',
       timestamp: new Date()
     }
@@ -102,7 +102,7 @@ const FloatingChatBot = () => {
     setMessages([
       {
         id: 1,
-        text: "👋 Hey! I'm your music assistant. Ask me about your Spotify data or get music recommendations!",
+        text: "👋 Hey! I'm your music assistant. Ask me anything or about your Spotify data or get music recommendations!",
         sender: 'bot',
         timestamp: new Date()
       }
